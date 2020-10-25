@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
-import 'package:github_search/core/error/exceptions.dart';
+
 import 'package:github_search/data/models/search_result_error/search_result_error.dart';
 import 'package:http/http.dart' as http;
 import 'package:injectable/injectable.dart';

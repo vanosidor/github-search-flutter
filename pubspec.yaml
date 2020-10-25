@@ -43,8 +43,14 @@ dependencies:
   #RxDart
   rxdart: ^0.24.1
 
-#  Url laucher
+  #  Url laucher
   url_launcher: ^5.5.1
+
+  # Value equality
+  equatable: ^1.2.5
+
+  # Functional programming thingies(use for Either)
+  dartz: ^0.8.6
 
     # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -53,6 +59,8 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+
+  mockito: ^4.1.0
 
   #Generators
   freezed: ^0.11.5
