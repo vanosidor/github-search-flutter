@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:github_search/core/error/failure.dart';
 import 'package:github_search/features/github_search/domain/entities/github_repository.dart';
 import 'package:github_search/features/github_search/domain/entities/github_user.dart';
 import 'package:github_search/features/github_search/domain/repositories/github_search_repository.dart';
@@ -27,17 +28,20 @@ void main() {
       htmlUrl: 'https://api.github.com/repos/flutter/flutter',
       owner: tGithubUser);
 
+  final tRepositories = [tGithubRepository];
+
   test(
     'should get list of github repository for the term',
     () async {
       //arrange
       when(mockGithubRepository.getGithubRepositories(any))
-          .thenAnswer((_) async => Right([tGithubRepository]));
+          .thenAnswer((_) async => Right(tRepositories));
       // act
-      final result = await usecase.execute(term: tTerm);
-      final expected = Right([tGithubRepository]);
+      final Either<Failure, List<GithubRepository>> result =
+          await usecase.execute(term: tTerm);
+
       // assert
-      expect(result, expected);
+      expect(result, Right(tRepositories));
       verify(mockGithubRepository.getGithubRepositories(tTerm));
       verifyNoMoreInteractions(mockGithubRepository);
     },
