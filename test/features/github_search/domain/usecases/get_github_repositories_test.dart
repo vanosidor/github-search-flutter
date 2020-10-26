@@ -11,12 +11,12 @@ class MockGithubSearchRepository extends Mock
     implements GithubSearchRepository {}
 
 void main() {
-  GetGithubRepositoriesUsecase usecase;
+  GetGithubRepositoriesUseCase usecase;
   MockGithubSearchRepository mockGithubRepository;
 
   setUp(() {
     mockGithubRepository = MockGithubSearchRepository();
-    usecase = GetGithubRepositoriesUsecase(mockGithubRepository);
+    usecase = GetGithubRepositoriesUseCase(mockGithubRepository);
   });
 
   final tTerm = 'flutter';
@@ -38,7 +38,7 @@ void main() {
           .thenAnswer((_) async => Right(tRepositories));
       // act
       final Either<Failure, List<GithubRepository>> result =
-          await usecase.execute(term: tTerm);
+          await usecase(Params(term: tTerm));
 
       // assert
       expect(result, Right(tRepositories));

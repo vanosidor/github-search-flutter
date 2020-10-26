@@ -1,15 +1,28 @@
 import 'package:dartz/dartz.dart';
+import 'package:equatable/equatable.dart';
 import 'package:github_search/core/error/failure.dart';
+import 'package:github_search/core/usecases/usecase.dart';
 import 'package:github_search/features/github_search/domain/entities/github_repository.dart';
 import 'package:github_search/features/github_search/domain/repositories/github_search_repository.dart';
 import 'package:meta/meta.dart';
 
-class GetGithubRepositoriesUsecase {
+class GetGithubRepositoriesUseCase
+    implements UseCase<List<GithubRepository>, Params> {
   final GithubSearchRepository repository;
 
-  GetGithubRepositoriesUsecase(this.repository);
+  GetGithubRepositoriesUseCase(this.repository);
 
-  Future<Either<Failure, List<GithubRepository>>> execute({@required String term}) async {
-    return await repository.getGithubRepositories(term);
+  @override
+  Future<Either<Failure, List<GithubRepository>>> call(Params params) async {
+    return await repository.getGithubRepositories(params.term);
   }
+}
+
+class Params extends Equatable {
+  final String term;
+
+  const Params({@required this.term});
+
+  @override
+  List<Object> get props => [term];
 }
