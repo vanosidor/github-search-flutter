@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:github_search/core/error/failure.dart';
+import 'package:github_search/core/error/failures.dart';
 import 'package:github_search/features/github_search/domain/entities/github_repository.dart';
 import 'package:github_search/features/github_search/domain/entities/github_user.dart';
 import 'package:github_search/features/github_search/domain/repositories/github_search_repository.dart';
