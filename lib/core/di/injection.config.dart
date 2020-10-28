@@ -2,6 +2,7 @@
 
 import 'package:data_connection_checker/data_connection_checker.dart';
 import 'package:get_it/get_it.dart';
+import 'package:github_search/core/network/network_info.dart';
 
 // **************************************************************************
 // InjectableConfigGenerator
@@ -15,7 +16,6 @@ import '../../data/datasources/github_cache.dart';
 import '../../data/repositories/github_repository.dart';
 import '../../domain/repositories/i_github_repository.dart';
 import '../../presentation/home/bloc/github_search_bloc.dart';
-import '../platform/network_info.dart';
 import 'register_module.dart';
 
 /// adds generated dependencies

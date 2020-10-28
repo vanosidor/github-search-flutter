@@ -1,5 +1,5 @@
 import 'package:github_search/core/error/exceptions.dart';
-import 'package:github_search/core/platform/network_info.dart';
+import 'package:github_search/core/network/network_info.dart';
 import 'package:github_search/data/datasources/github_cache.dart';
 import 'package:github_search/data/datasources/github_api.dart';
 import 'package:github_search/data/models/search_result/search_result.dart';

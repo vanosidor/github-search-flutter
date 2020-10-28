@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:github_search/core/error/exceptions.dart';
 import 'package:github_search/core/error/failures.dart';
-import 'package:github_search/core/platform/network_info.dart';
+import 'package:github_search/core/network/network_info.dart';
 import 'package:github_search/features/github_search/data/datasources/github_search_local_data_source.dart';
 import 'package:github_search/features/github_search/data/datasources/github_search_remote_data_source.dart';
 import 'package:github_search/features/github_search/domain/entities/github_repository.dart';
