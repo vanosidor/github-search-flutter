@@ -32,7 +32,7 @@ class GithubSearchRepositoryImpl implements GithubSearchRepository {
       }
     } else {
       try {
-        final result = await localDataSource.getGithubRepositories(term);
+        final result = await localDataSource.getCachedRepositories(term);
         return Right(result);
       } on CacheException {
         return Left(CacheFailure());

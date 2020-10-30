@@ -2,14 +2,12 @@ import 'package:github_search/features/github_search/domain/entities/github_user
 import 'package:meta/meta.dart';
 
 class GithubUserModel extends GithubUser {
-  final String login;
-
-  final String avatarUrl;
-
-  GithubUserModel({@required this.login, @required this.avatarUrl});
+  GithubUserModel({@required String login, @required String avatarUrl})
+      : super(login: login, avatarUrl: avatarUrl);
 
   factory GithubUserModel.fromJson(Map<String, dynamic> jsonMap) {
-    return GithubUserModel(login: jsonMap['login'], avatarUrl: jsonMap['avatar_url']);
+    return GithubUserModel(
+        login: jsonMap['login'], avatarUrl: jsonMap['avatar_url']);
   }
 
   Map<String, dynamic> toJson() {

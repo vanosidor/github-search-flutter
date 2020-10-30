@@ -5,8 +5,8 @@ import 'package:github_search/core/error/failures.dart';
 import 'package:github_search/core/network/network_info.dart';
 import 'package:github_search/features/github_search/data/datasources/github_search_local_data_source.dart';
 import 'package:github_search/features/github_search/data/datasources/github_search_remote_data_source.dart';
-import 'package:github_search/features/github_search/data/models/GithubRepositoryModel.dart';
-import 'package:github_search/features/github_search/data/models/GithubUserModel.dart';
+import 'package:github_search/features/github_search/data/models/github_repository_model.dart';
+import 'package:github_search/features/github_search/data/models/github_user_model.dart';
 import 'package:github_search/features/github_search/data/repositories/github_search_repository_impl.dart';
 import 'package:github_search/features/github_search/domain/entities/github_repository.dart';
 import 'package:github_search/features/github_search/domain/repositories/github_search_repository.dart';
@@ -120,24 +120,24 @@ void main() {
     test(
         'should return cached data if cached data present in local data source',
         () async {
-      when(mockLocalDataSource.getGithubRepositories(any))
+      when(mockLocalDataSource.getCachedRepositories(any))
           .thenAnswer((_) async => tGithubRepositoryModels);
 
       final result = await repository.getGithubRepositories(tTerm);
 
       verifyZeroInteractions(mockRemoteDataSource);
-      verify(mockLocalDataSource.getGithubRepositories(tTerm));
+      verify(mockLocalDataSource.getCachedRepositories(tTerm));
       expect(result, Right(tGithubRepositories));
     });
 
     test('should return CacheError instance if no data present', () async {
-      when(mockLocalDataSource.getGithubRepositories(any))
+      when(mockLocalDataSource.getCachedRepositories(any))
           .thenThrow(CacheException());
 
       final result = await repository.getGithubRepositories(tTerm);
 
       //assert
-      verify(mockLocalDataSource.getGithubRepositories(tTerm));
+      verify(mockLocalDataSource.getCachedRepositories(tTerm));
       verifyZeroInteractions(mockRemoteDataSource);
       expect(result, equals(Left(CacheFailure())));
     });
