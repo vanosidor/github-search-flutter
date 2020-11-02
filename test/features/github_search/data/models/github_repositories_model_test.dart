@@ -52,7 +52,8 @@ void main() {
           "full_name": "flutter/flutter",
           "owner": {
             "login": "flutter",
-            "avatar_url": "https://avatars3.githubusercontent.com/u/14101776?v=4"
+            "avatar_url":
+                "https://avatars3.githubusercontent.com/u/14101776?v=4"
           },
           "html_url": "https://github.com/flutter/flutter"
         },
@@ -60,13 +61,13 @@ void main() {
           "full_name": "iampawan/FlutterExampleApps",
           "owner": {
             "login": "iampawan",
-            "avatar_url": "https://avatars1.githubusercontent.com/u/12619420?v=4",
+            "avatar_url":
+                "https://avatars1.githubusercontent.com/u/12619420?v=4",
           },
           "html_url": "https://github.com/iampawan/FlutterExampleApps"
         }
       ]
-    }
-    ;
+    };
     //assert
     expect(actual, expected);
   });

@@ -5,10 +5,10 @@ import 'package:github_search/core/error/failures.dart';
 import 'package:github_search/core/network/network_info.dart';
 import 'package:github_search/features/github_search/data/datasources/github_search_local_data_source.dart';
 import 'package:github_search/features/github_search/data/datasources/github_search_remote_data_source.dart';
+import 'package:github_search/features/github_search/data/models/github_repositories_model.dart';
 import 'package:github_search/features/github_search/data/models/github_repository_model.dart';
 import 'package:github_search/features/github_search/data/models/github_user_model.dart';
 import 'package:github_search/features/github_search/data/repositories/github_search_repository_impl.dart';
-import 'package:github_search/features/github_search/domain/entities/github_repository.dart';
 import 'package:github_search/features/github_search/domain/repositories/github_search_repository.dart';
 import 'package:mockito/mockito.dart';
 
@@ -36,7 +36,8 @@ void main() {
   final List<GithubRepositoryModel> tGithubRepositoryModels = [
     tGithubRepositoryModel
   ];
-  final List<GithubRepository> tGithubRepositories = tGithubRepositoryModels;
+  final GithubRepositoriesModel tGithubRepositories =
+      GithubRepositoriesModel(items: tGithubRepositoryModels);
 
   setUp(() {
     mockLocalDataSource = MockLocalDataSource();
@@ -82,7 +83,7 @@ void main() {
         () async {
       //arrange
       when(mockRemoteDataSource.getGithubRepositories(any))
-          .thenAnswer((_) async => tGithubRepositoryModels);
+          .thenAnswer((_) async => tGithubRepositories);
 
       //act
       final result = await repository.getGithubRepositories(tTerm);
@@ -94,12 +95,11 @@ void main() {
 
     test('should cache repositories locally if result is successful', () async {
       when(mockRemoteDataSource.getGithubRepositories(any))
-          .thenAnswer((_) async => tGithubRepositoryModels);
+          .thenAnswer((_) async => tGithubRepositories);
       await repository.getGithubRepositories(tTerm);
 
       verify(mockRemoteDataSource.getGithubRepositories(tTerm));
-      verify(
-          mockLocalDataSource.cacheGithubRepositories(tGithubRepositoryModels));
+      verify(mockLocalDataSource.cacheGithubRepositories(tGithubRepositories));
     });
 
     test('should return ServerFailure if call to remote data unsuccessful',
@@ -121,7 +121,7 @@ void main() {
         'should return cached data if cached data present in local data source',
         () async {
       when(mockLocalDataSource.getCachedRepositories(any))
-          .thenAnswer((_) async => tGithubRepositoryModels);
+          .thenAnswer((_) async => tGithubRepositories);
 
       final result = await repository.getGithubRepositories(tTerm);
 
