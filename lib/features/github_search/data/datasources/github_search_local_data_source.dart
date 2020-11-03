@@ -35,5 +35,6 @@ class GithubSearchLocalDataSourceImpl implements GithubSearchLocalDataSource {
       GithubRepositoriesModel githubRepositories) {
     final jsonValue = json.encode(githubRepositories.toJson());
     sharedPreferences.setString(CACHED_GITHUB_REPOSITORIES, jsonValue);
+    return Future.value();
   }
 }
