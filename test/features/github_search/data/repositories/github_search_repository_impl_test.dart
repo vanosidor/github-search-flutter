@@ -99,7 +99,7 @@ void main() {
       await repository.getGithubRepositories(tTerm);
 
       verify(mockRemoteDataSource.getGithubRepositories(tTerm));
-      verify(mockLocalDataSource.cacheGithubRepositories(tGithubRepositories));
+      verify(mockLocalDataSource.cacheGithubRepositories(tTerm, tGithubRepositories));
     });
 
     test('should return ServerFailure if call to remote data unsuccessful',

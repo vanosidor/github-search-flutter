@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:github_search/presentation/home/bloc/github_search_bloc.dart';
+import 'package:github_search/features/github_search/presentation/bloc/github_search_bloc.dart';
 
 class SearchBar extends StatefulWidget {
   @override
@@ -11,7 +11,6 @@ class SearchBar extends StatefulWidget {
 class SearchBarState extends State<SearchBar> {
   TextEditingController _textController = TextEditingController();
   GithubSearchBloc _githubSearchBloc;
-
 
   @override
   void initState() {
@@ -26,7 +25,10 @@ class SearchBarState extends State<SearchBar> {
       child: TextField(
         controller: _textController,
         autocorrect: false,
-        onChanged: (value) { if (value.length > 2) _githubSearchBloc.add(GithubSearchEvent.textChanged(value)); },
+        onChanged: (value) {
+          if (value.length > 2) _githubSearchBloc.add(TextChanged(text: value));
+          print('on text changed');
+        },
         decoration: InputDecoration(
           border: InputBorder.none,
           prefixIcon: Icon(Icons.search),
@@ -39,7 +41,7 @@ class SearchBarState extends State<SearchBar> {
   }
 
   void _clearSearch() {
-       _githubSearchBloc.add(GithubSearchEvent.textChanged(''));
+    _githubSearchBloc.add(TextChanged(text: ''));
     _textController.clear();
   }
 

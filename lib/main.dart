@@ -1,15 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'presentation/home/pages/home_page.dart';
-import 'presentation/home/bloc/github_search_bloc.dart';
+import 'package:github_search/features/github_search/presentation/pages/github_search_page.dart';
 
-import 'package:injectable/injectable.dart';
+import 'injection_container.dart' as di;
 
-import 'core/di/injection.dart';
-
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  configureInjection(Environment.dev);
+  await di.init();
   runApp(MyApp());
 }
 
@@ -18,10 +14,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: BlocProvider<GithubSearchBloc>(
-        create: (context) => getIt(),
-        child: HomePage(),
-      ),
+      home: GithubSearchPage(),
     );
   }
 }

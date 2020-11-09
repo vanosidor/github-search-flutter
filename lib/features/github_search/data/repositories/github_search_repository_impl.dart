@@ -25,9 +25,9 @@ class GithubSearchRepositoryImpl implements GithubSearchRepository {
     if (isConnected) {
       try {
         final repositories = await remoteDataSource.getGithubRepositories(term);
-        await localDataSource.cacheGithubRepositories(repositories);
+        await localDataSource.cacheGithubRepositories(term, repositories);
         return Right(repositories);
-      } on ServerException catch (e) {
+      } on ServerException {
         return Left(ServerFailure());
       }
     } else {

@@ -9,10 +9,11 @@ abstract class GithubSearchLocalDataSource {
   Future<GithubRepositoriesModel> getCachedRepositories(String term);
 
   Future<void> cacheGithubRepositories(
-      GithubRepositoriesModel githubRepositories);
+      String term, GithubRepositoriesModel githubRepositories);
 }
 
 const CACHED_GITHUB_REPOSITORIES = 'CACHED_GITHUB_REPOSITORIES';
+const CACHED_TERM = 'CACHED_TERM';
 
 class GithubSearchLocalDataSourceImpl implements GithubSearchLocalDataSource {
   final SharedPreferences sharedPreferences;
@@ -21,6 +22,8 @@ class GithubSearchLocalDataSourceImpl implements GithubSearchLocalDataSource {
 
   @override
   Future<GithubRepositoriesModel> getCachedRepositories(String term) {
+    final String cachedTerm = sharedPreferences.getString(CACHED_TERM);
+    if (cachedTerm != term) throw CacheException();
     final String jsonString =
         sharedPreferences.getString(CACHED_GITHUB_REPOSITORIES);
     if (jsonString == null)
@@ -32,8 +35,9 @@ class GithubSearchLocalDataSourceImpl implements GithubSearchLocalDataSource {
 
   @override
   Future<void> cacheGithubRepositories(
-      GithubRepositoriesModel githubRepositories) {
+      String term, GithubRepositoriesModel githubRepositories) {
     final jsonValue = json.encode(githubRepositories.toJson());
+    sharedPreferences.setString(CACHED_TERM, term);
     sharedPreferences.setString(CACHED_GITHUB_REPOSITORIES, jsonValue);
     return Future.value();
   }

@@ -1,32 +1,31 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:github_search/presentation/home/bloc/github_search_bloc.dart';
-import 'package:github_search/presentation/home/widgets/result_item.dart';
+import 'package:github_search/features/github_search/presentation/bloc/github_search_bloc.dart';
+import 'package:github_search/features/github_search/presentation/widgets/result_item.dart';
 
 class SearchContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<GithubSearchBloc, GithubSearchState>(
       builder: (context, state) {
-        if (state is SearchEmptyState) {
+        if (state is Empty) {
           return Center(child: Text('Please enter term'));
         }
 
-        if (state is SearchLoadingState) {
+        if (state is Loading) {
           return Center(child: CircularProgressIndicator());
         }
 
-        if (state is SearchErrorState) {
+        if (state is Error) {
           return Center(child: Text('Error occurred: ${state.message}'));
         }
-        if (state is SearcSuccessState) {
+        if (state is Loaded) {
 
-          final _items = state.items;
+          final _items = state.repositories.items;
 
           return _items.isEmpty ? Text('Items list is empty') : ListView.builder(
             itemCount: _items.length,
-            itemBuilder: (context, index) => ResultItem(item: _items[index]),
+            itemBuilder: (context, index) => ResultItem(repository: _items[index]),
           );
         }
         return Text('unknown widget state');

@@ -19,6 +19,7 @@ void main() {
   GithubSearchLocalDataSourceImpl localDataSource;
 
   final tTerm = 'flutter';
+  final tTermOther = 'angular';
 
   final tGithubRepositoriesCached = GithubRepositoriesModel.fromJson(
       json.decode(fixture('github_repositories_cached.json')));
@@ -34,14 +35,26 @@ void main() {
         'should return GithubRepositoriesModel from shared preferences if there is in cache',
         () async {
       //arrange
+      when(mockSharedPreferences.getString(CACHED_TERM)).thenReturn(tTerm);
+
       when(mockSharedPreferences.getString(CACHED_GITHUB_REPOSITORIES))
           .thenReturn(fixture('github_repositories_cached.json'));
       //act
       final result = await localDataSource.getCachedRepositories(tTerm);
 
       //assert
+      verify(mockSharedPreferences.getString(CACHED_TERM));
       verify(mockSharedPreferences.getString(CACHED_GITHUB_REPOSITORIES));
       expect(result, tGithubRepositoriesCached);
+    });
+
+    test('should return cache exception if term not matches cached', () async {
+      when(mockSharedPreferences.getString(CACHED_TERM)).thenReturn(tTermOther);
+
+      final call = localDataSource.getCachedRepositories;
+
+      //assert
+      expect(() => call(tTerm), throwsA(TypeMatcher<CacheException>()));
     });
 
     test('should throw CacheException when there is not cached value',
@@ -70,7 +83,7 @@ void main() {
 
     test('should call shared preference to cache the data', () async {
       //act
-      localDataSource.cacheGithubRepositories(tGithubRepositoriesModel);
+      localDataSource.cacheGithubRepositories(tTerm, tGithubRepositoriesModel);
       //assert
       final expectedJsonString = json.encode(tGithubRepositoriesModel.toJson());
       verify(mockSharedPreferences.setString(
